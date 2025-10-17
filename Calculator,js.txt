@@ -1,0 +1,66 @@
+const readline = require('readline');
+
+const input = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+function doMath(firstNum, operation, secondNum) {
+  if (operation === '+') {
+    return firstNum + secondNum;
+  } else if (operation === '-') {
+    return firstNum - secondNum;
+  } else if (operation === '*') {
+    return firstNum * secondNum;
+  } else if (operation === '/') {
+    if (secondNum === 0) {
+      return "Cannot divide by zero!";
+    }
+    return firstNum / secondNum;
+  } else {
+    return "Invalid operation!";
+  }
+}
+
+function runCalculator() {
+  input.question('Type your calculation: ', (userInput) => {
+    const pieces = userInput.trim().split(' ');
+    
+    if (pieces.length !== 3) {
+      console.log('Wrong format! Use: number operation number');
+      askAgain();
+      return;
+    }
+
+    const firstNum = parseFloat(pieces[0]);
+    const operation = pieces[1];
+    const secondNum = parseFloat(pieces[2]);
+
+    if (isNaN(firstNum) || isNaN(secondNum)) {
+      console.log('Those are not valid numbers!');
+      askAgain();
+      return;
+    }
+
+    const answer = doMath(firstNum, operation, secondNum);
+    console.log(`Answer: ${answer}`);
+    askAgain();
+  });
+}
+
+function askAgain() {
+    input.question('Do another? (yes/no): ', (response) => {
+        if (response.toLowerCase() === 'yes') {
+            console.log('=================================');
+            runCalculator();
+        } else {
+            console.log('Thanks for using the calculator!');
+            input.close();
+        }
+    });
+}
+
+console.log('Basic Calculator Program');
+console.log('Type your calculation with spaces (example: 10 * 5)');
+console.log('=================================');
+runCalculator();
