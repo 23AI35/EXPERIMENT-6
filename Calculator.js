@@ -63,4 +63,5 @@ function askAgain() {
 console.log('Basic Calculator Program');
 console.log('Type your calculation with spaces (example: 10 * 5)');
 console.log('=================================');
+
 runCalculator();
