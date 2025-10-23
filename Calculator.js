@@ -26,7 +26,7 @@ function start() {
       if (answer.toLowerCase() === 'y') {
         start();
       } else {
-        console.log('Goodbye!');
+        console.log('END');
         rl.close();
       }
     });
@@ -34,4 +34,5 @@ function start() {
 }
 
 console.log('Calculator\n');
+
 start();
