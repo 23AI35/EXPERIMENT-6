@@ -51,7 +51,7 @@ function runCalculator() {
 function askAgain() {
     input.question('Do another? (yes/no): ', (response) => {
         if (response.toLowerCase() === 'yes') {
-            console.log('=================================');
+            console.log('');
             runCalculator();
         } else {
             console.log('Thanks for using the calculator!');
@@ -61,7 +61,8 @@ function askAgain() {
 }
 
 console.log('Basic Calculator Program');
-console.log('Type your calculation with spaces (example: 10 * 5)');
-console.log('=================================');
+console.log('Type your calculation with spaces');
+console.log('');
 
 runCalculator();
+
