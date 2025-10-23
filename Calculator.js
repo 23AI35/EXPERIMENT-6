@@ -1,68 +1,37 @@
 const readline = require('readline');
 
-const input = readline.createInterface({
+const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-function doMath(firstNum, operation, secondNum) {
-  if (operation === '+') {
-    return firstNum + secondNum;
-  } else if (operation === '-') {
-    return firstNum - secondNum;
-  } else if (operation === '*') {
-    return firstNum * secondNum;
-  } else if (operation === '/') {
-    if (secondNum === 0) {
-      return "Cannot divide by zero!";
-    }
-    return firstNum / secondNum;
-  } else {
-    return "Invalid operation!";
+function calculate(num1, operator, num2) {
+  switch (operator) {
+    case '+': return num1 + num2;
+    case '-': return num1 - num2;
+    case '*': return num1 * num2;
+    case '/': return num2 !== 0 ? num1 / num2 : 'Cannot divide by zero';
+    default: return 'Invalid operator';
   }
 }
 
-function runCalculator() {
-  input.question('Type your calculation: ', (userInput) => {
-    const pieces = userInput.trim().split(' ');
+function start() {
+  rl.question('Enter calculation: ', (input) => {
+    const [a, op, b] = input.trim().split(' ');
+    const result = calculate(Number(a), op, Number(b));
     
-    if (pieces.length !== 3) {
-      console.log('Wrong format! Use: number operation number');
-      askAgain();
-      return;
-    }
-
-    const firstNum = parseFloat(pieces[0]);
-    const operation = pieces[1];
-    const secondNum = parseFloat(pieces[2]);
-
-    if (isNaN(firstNum) || isNaN(secondNum)) {
-      console.log('Those are not valid numbers!');
-      askAgain();
-      return;
-    }
-
-    const answer = doMath(firstNum, operation, secondNum);
-    console.log(`Answer: ${answer}`);
-    askAgain();
+    console.log(`Result: ${result}\n`);
+    
+    rl.question('Continue? (y/n): ', (answer) => {
+      if (answer.toLowerCase() === 'y') {
+        start();
+      } else {
+        console.log('Goodbye!');
+        rl.close();
+      }
+    });
   });
 }
 
-function askAgain() {
-    input.question('Do another? (yes/no): ', (response) => {
-        if (response.toLowerCase() === 'yes') {
-            console.log('');
-            runCalculator();
-        } else {
-            console.log('Thanks for using the calculator!');
-            input.close();
-        }
-    });
-}
-
-console.log('Basic Calculator Program');
-console.log('Type your calculation with spaces');
-console.log('');
-
-runCalculator();
-
+console.log('Calculator\n');
+start();
